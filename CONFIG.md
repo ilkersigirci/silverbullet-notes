@@ -114,14 +114,14 @@ config.set {
 
 ## Action Buttons
 
-```space-lua  
+```space-lua
 -- Action buttons configuration
 config.set {
   actionButtons = {
     {
       icon = "terminal",
       description = "Run command",
-      priority = 1,
+      priority = 999,
       run = function()
         editor.invokeCommand("Open Command Palette")
       end,
@@ -142,7 +142,7 @@ actionButton.define {
 actionButton.define {
   icon = "search",
   description = "Search",
-  priority = 999,
+  priority = 998,
   run = function()
     editor.invokeCommand("Silversearch: Search")
   end
@@ -175,13 +175,23 @@ config.set {
 
 actionButton.define {
   icon = 'file-plus',
+  priority = 997,
   description = 'Create Page',
   run = function()
     editor.invokeCommand("Page: Create Page")
   end
 }
 actionButton.define {
-  icon = "md-format-bold",
+  icon = "rotate-ccw",
+  priority = 996,
+  description = "Undo",
+  mobile = true,
+  run = function()
+    editor.invokeCommand("Editor: Undo")
+  end
+}
+actionButton.define {
+  icon = "bold",
   description = "Bold",
   mobile = true,
   run = function()
@@ -189,7 +199,7 @@ actionButton.define {
   end
 }
 actionButton.define {
-  icon = "md-format-italic",
+  icon = "italic",
   description = "Italic",
   mobile = true,
   run = function()
@@ -197,7 +207,8 @@ actionButton.define {
   end
 }
 actionButton.define {
-  icon = "md-format-strikethrough",
+  -- Icon not showing
+  icon = "strikethrough",
   description = "Strikethrough",
   mobile = true,
   run = function()
@@ -205,7 +216,7 @@ actionButton.define {
   end
 }
 actionButton.define {
-  icon = "md-format-list-bulleted",
+  icon = "list",
   description = "List",
   mobile = true,
   run = function()
@@ -213,7 +224,8 @@ actionButton.define {
   end
 }
 actionButton.define {
-  icon = "md-format-list-numbered",
+  -- Icon not showing
+  icon = "list-ordered",
   description = "List",
   mobile = true,
   run = function()
@@ -229,7 +241,7 @@ actionButton.define {
   end
 }
 actionButton.define {
-  icon = "md-format-indent-decrease",
+  icon = "arrow-left",
   description = "Dedent",
   mobile = true,
   run = function()
@@ -237,7 +249,7 @@ actionButton.define {
   end
 }
 actionButton.define {
-  icon = "md-format-indent-increase",
+  icon = "arrow-right",
   description = "Indent",
   mobile = true,
   run = function()
@@ -245,19 +257,11 @@ actionButton.define {
   end
 }
 actionButton.define {
-  icon = "md-link",
+  icon = "link",
   description = "Link",
   mobile = true,
   run = function()
     editor.invokeCommand("Text: Link Selection")
-  end
-}
-actionButton.define {
-  icon = "rotate-ccw",
-  description = "Undo",
-  mobile = true,
-  run = function()
-    editor.invokeCommand("Editor: Undo")
   end
 }
 ```
