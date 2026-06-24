@@ -112,6 +112,24 @@ config.set {
 }
 ```
 
+### Mermaid
+
+```bash
+config.set("mermaid", {
+  version = "11.4.0",
+  integrity = "new integrity hash",
+  -- or disable integrity checking
+  integrity_disabled = true
+  -- optional: register icon packs 
+  icon_packs = {
+    {
+      name = "logos",
+      url = "https://unpkg.com/@iconify-json/logos@1/icons.json",
+    },
+  },
+})
+```
+
 ## Action Buttons
 
 ```space-lua
@@ -283,7 +301,7 @@ actionButton.define {
     cursor:grab;
     scrollbar-width:none;
     flex-wrap: nowrap;
-    height:1.4rem;
+    height:1.6rem;
     white-space: nowrap;
     display: flex;
     overflow-y: hidden;
