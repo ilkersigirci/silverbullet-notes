@@ -19,7 +19,7 @@ Builtin [[^Library/Std/Pages/Maintenance]] Page
 - SilverBullet uses [markdown](https://www.markdownguide.org/)
 - While SilverBullet implements (most) of [CommonMark](https://commonmark.org/), it also adds a few extensions that are SilverBullet-specific. Most notably, it adds the `${Lua expression}` syntax to render Lua expressions inline.
 
-The last 5 opened pages.
+To show last 5 opened pages:
 
 ${query[[
   from p = editor.getRecentlyOpenedPages "page"
