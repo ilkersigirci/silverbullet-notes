@@ -171,9 +171,7 @@ actionButton.define {
   icon = (editor.getUiOption("forcedROMode") and "edit") or "eye",
   description = "Toggle Read-Only",
   priority = 1000,
-  -- Uncomment the following line to only make this button appear
-  -- ONLY on mobile devices:
-  --   mobile = true,
+  mobile = true,
   run = function()
     local mode = editor.getUiOption("forcedROMode")
     editor.setUiOption("forcedROMode", not mode)

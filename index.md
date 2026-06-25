@@ -13,8 +13,9 @@ ${widgets.commandButton("System: Reload")}
 
 Builtin [[^Library/Std/Pages/Maintenance]] Page
 
-**Total pages:** ${#query[[from index.tag "page" select name]]}
-**Total documents:** ${#query[[from index.tag "document" select name]]}
+Builtin [[^Library/Std/Pages/Space Overview]] Page
+- **Total pages:** ${#query[[from index.tag "page" select name]]}
+- **Total documents:** ${#query[[from index.tag "document" select name]]}
 
 - SilverBullet uses [markdown](https://www.markdownguide.org/)
 - While SilverBullet implements (most) of [CommonMark](https://commonmark.org/), it also adds a few extensions that are SilverBullet-specific. Most notably, it adds the `${Lua expression}` syntax to render Lua expressions inline.
