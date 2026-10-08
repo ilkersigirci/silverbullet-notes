@@ -25,7 +25,7 @@ files:
   - Silverbullet-Math/fonts/KaTeX_Caligraphic-Bold.woff2
   - Silverbullet-Math/fonts/KaTeX_AMS-Regular.woff2
 share.uri: "https://github.com/MrMugame/silverbullet-math/blob/main/Math.md"
-share.hash: b4f31a7f
+share.hash: f95ab823
 share.mode: pull
 ---
 
@@ -77,11 +77,8 @@ syntax.define {
 
 ## Implementation
 ```space-lua
-local location = "Library/mrmugame/Silverbullet-Math"
-
 latex = {
-  header = string.format("<link rel=\"stylesheet\" href=\".fs/%s/katex.min.css\">", location),
-  katex = js.import(string.format("%s.fs/%s/katex.mjs", system.getURLPrefix(),  location))
+  katex = js.import(string.format("%s.fs/Library/mrmugame/Silverbullet-Math/katex.mjs", system.getURLPrefix()))
 }
 
 function latex.inline(expression)
@@ -93,7 +90,7 @@ function latex.inline(expression)
 
   return widget.new {
     display = "inline",
-    html = "<span>" .. latex.header .. html .. "</span>"
+    html = html
   }
 end
 
@@ -106,12 +103,14 @@ function latex.block(expression)
 
   return widget.new {
     display = "block",
-    html = "<span>" .. latex.header .. html .. "</span>"
+    html = html
   }
 end
 ```
 
 ```space-style
+@import url(".fs/Library/mrmugame/Silverbullet-Math/katex.min.css");
+
 .sb-lua-directive-inline:has(.katex-html) {
   border: none !important;
 }

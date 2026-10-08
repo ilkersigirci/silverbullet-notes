@@ -1,7 +1,7 @@
 ---
 tags: meta/repository
 share.uri: "github:ilkersigirci/silverbullet-libraries/REPO.md"
-share.hash: 63fc878e
+share.hash: d9d7a7f2
 share.mode: pull
 ---
 
@@ -38,7 +38,13 @@ uri: https://github.com/ilkersigirci/silverbullet-libraries/blob/main/styles/gen
 ---
 name: Saving Indicator
 author: Ilker SIGIRCI
-description: Animate when saving file.
+description: Animate when saving file
 website: https://github.com/ilkersigirci/silverbullet-libraries
 uri: https://github.com/ilkersigirci/silverbullet-libraries/blob/main/styles/saving-indicator.md
+---
+name: Mobile Toolbar
+author: Ilker SIGIRCI
+description: Mobile Toolbar
+website: https://github.com/ilkersigirci/silverbullet-libraries
+uri: https://github.com/ilkersigirci/silverbullet-libraries/blob/main/styles/mobile-toolbar.md
 ```

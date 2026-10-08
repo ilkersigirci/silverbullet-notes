@@ -3,7 +3,7 @@ name: "Repository/Mr-xRed Repo"
 tags: meta/repository
 pageDecoration.prefix: "📚 "
 share.uri: "https://github.com/Mr-xRed/silverbullet-libraries/blob/main/Repository/Mr-xRed.md"
-share.hash: d062c0c3
+share.hash: 13c8a6b2
 share.mode: pull
 ---
 ## Tools
@@ -27,6 +27,21 @@ name: "🛠️ TableFilterAndSorting"
 uri: github:Mr-xRed/silverbullet-libraries/TableFilterAndSorting.md
 website: https://github.com/Mr-xRed/silverbullet-libraries/blob/main/TableFilterAndSorting.md
 description: "Adds filter & sorting to SilverBullet tables globally"
+---
+name: "🔁 TableConverter"
+uri: github:Mr-xRed/silverbullet-libraries/TableConverter.md
+website: https://github.com/Mr-xRed/silverbullet-libraries/blob/main/TableConverter.md
+description: "Converts the selected text (CSV, TSV, JSON or JSON Lines) into a Markdown table"
+---
+name: "📥 ExportSpaceAsZIP"
+uri: github:Mr-xRed/silverbullet-libraries/ExportSpaceAsZIP.md
+website: https://github.com/Mr-xRed/silverbullet-libraries/blob/main/ExportSpaceAsZIP.md
+description: "Adds a command to download the whole space (pages and attachments) as a zip file."
+---
+name: "🛠️ MathInTables"
+uri: github:Mr-xRed/silverbullet-libraries/MathInTables.md
+website: https://github.com/Mr-xRed/silverbullet-libraries/blob/main/MathInTables.md
+description: "Workaround for Katex rendering in Tables"
 ---
 name: "🛠️ Advanced Panel Control and Window Management"
 uri: github:Mr-xRed/silverbullet-libraries/AdvancedPanelControl.md

@@ -5,207 +5,165 @@ This is where you configure SilverBullet to your liking. See [[^Library/Std/Conf
 ## General
 
 ```space-lua
---priority: 9
-
--- Disable TOC widget and use TOC Sidepanel instead
-function widgets.toc(options)
-    return
-end
-```
-
-```space-lua
---priority 100
+-- priority: 90
+-- Apply preferences after the built-in defaults (priority 99), before libraries.
 -- Core configuration settings
 config.set {
+  -- Keep attachments on demand to reduce local storage and background sync.
+  -- Set to true if you need documents available offline.
   ["sync.documents"] = false,
 }
 ```
 
-```space-lua
--- Reset the dark mode toggle to follow the system theme
-clientStore.delete("darkMode")
-```
+## Native navigation
 
-## Libraries
+Use the built-in Space tree and Table of Contents. SilverBullet handles resizing, following the current page, and remembering panel state.
 
 ```space-lua
--- Library configurations
-
-local aigateway_api_key = "DUMMY"
-
-config.set {
-  explorer = {
-    position = "lhs",
-    homeDirName = "🏠 Home",
-    goToCurrentDir = true,
-    tileSize = "80px",
-    enableContextMenu = true,
-    listHeight = "24px",
-    negativeFilter = {"Library/Std","*.js", "*test*"},
-    treeFolderFirst = false,
-    recoverAfterRefresh = true
-  },
-
-  AdvancedPanelControl = {
-    mode = "auto",  -- "auto" | "overlay" | "dock"
-    gestures = true,  -- true (enabled), false (disabled)
-    minWidth = "300", -- min Width Constraints for LHS and RHS
-    maxWidth = "1000", -- max Width Constraints for LHS and RHS
-    minHeight = "100", -- min Height Constraints for BHS
-    maxHeight = "500", -- max Height Constraints for BHS
-  },
-
-  silversearch = {
-    -- Weighs specific fields more
-    weights = {
-      basename = 15
-      -- Also available: tags, aliases, directory, displayName, content
-    },
-    -- Weighs pages with specific attributes set through frontmatter more if that attribute is included in the search
-    weightCustomProperties = {
-      books = 10
-    },
-    -- Files that have been edited more recently than, will be weighed more. Options are "day", "week", "month" or "disabled"
-    recencyBoost = "week",
-    -- Rank specific folders down
-    downrankedFoldersFilters = {"Library/"},
-    -- Normalize diatrics in queries and search terms. Words like "brûlée" or "žluťoučký" will be indexed as "brulee" and "zlutoucky".
-    ignoreDiacritics = true,
-    -- Similar to `ignoreDiacritics` but for arabic diatritics
-    ignoreArabicDiacritics = false,
-    -- Breaks urls down into searchable words
-    tokenizeUrls = true,
-    -- Breaks words seperated with camel case into searchable words
-    splitCamelCase = true,
-    -- Increases the fuzziness of the full-text search, options are "0", "1", "2"
-    fuzziness = "1",
-    -- Puts newlines into the excerpts as opposed to rendering it as one continous string
-    renderLineReturnInExcerpts = true
-  },
-
-  -- NOTE: When `useProxy: false`, requests bypass SilverBullet's server proxy and go directly from the browser. Useful for local services like Ollama running on the same machine as the browser
-
-
-  ai = {
-    providers = {
-      aigateway = {
-        provider = "openai",
-        apiKey = aigateway_api_key,
-        baseUrl = "https://aigateway.gpu.ilkerflix.com/v1",
-        preferredModels = {"openai/gpt-5.4-mini", "vllm-qwen/Qwen3.5-35B-A3B"}
-      }
-    },
-    -- Optional: auto-select a default model on startup
-    defaultTextModel = "aigateway:vllm-qwen/Qwen3.5-35B-A3B",
-    
-    -- Optional: enable embeddings for semantic search
-    defaultEmbeddingModel = "aigateway:text-embedding-3-small",
-    indexEmbeddings = false,
-    -- Optional: configure DALL-E for image generation
-    defaultImageModel = "aigateway:dall-e-3",
-    -- Optional: customize chat behavior
-    chat = {
-      userInformation = "I'm a software developer who likes taking notes.",
-      userInstructions = "Please give short and concise responses."
-    }
-  }
-}
-```
-
-### Mermaid
-
-```bash
-config.set("mermaid", {
-  version = "11.4.0",
-  integrity = "new integrity hash",
-  -- or disable integrity checking
-  integrity_disabled = true
-  -- optional: register icon packs 
-  icon_packs = {
-    {
-      name = "logos",
-      url = "https://unpkg.com/@iconify-json/logos@1/icons.json",
-    },
-  },
+-- priority: 90
+config.set("view.defaults", {
+  ["std.spaceTree"] = { dock = "lhs", open = true, width = 280 },
+  ["std.toc"] = { dock = "rhs", open = true, width = 240 },
 })
 ```
 
-## Action Buttons
+Saved choices on each device override these defaults. To apply this layout on a device where you have already moved or closed views, run **Navigate: Reset All Views** once. This also resets other views' saved positions and sizes.
+
+- **Navigate: Tree** (`Ctrl-o` / `Cmd-o`) opens or focuses the explorer. Use its **Pages**, **Documents**, and **Meta** segments to filter content; library pages live under Meta.
+- **Navigate: Table of Contents** opens the current page's headings. Use its dock menu to move it.
+- On narrow screens, sidebars become drawers and stay closed at startup. After opening one from the menu, its native top-bar button keeps it accessible.
+- In the tree, press `Space` to open the selected page while keeping keyboard focus in the tree. Use **Editor: New Window** to open a separate editor window.
+
+## Action buttons and mobile editing
+
+Keep the built-in Home, Page Picker, Command Palette, account menu, PWA history controls, and mobile read-only button. Add shortcuts for the native views and Silversearch; on phones these extra shortcuts live in the menu to leave room for the page title and drawer buttons.
 
 ```space-lua
 -- Action buttons configuration
-config.set {
-  actionButtons = {
-    {
-      icon = "terminal",
-      description = "Run command",
-      priority = 999,
-      run = function()
-        editor.invokeCommand("Open Command Palette")
-      end,
-    }
-  }
-}
-
 -- Additional action buttons defined separately
 actionButton.define {
   icon = "sidebar",
-  priority = 0,
-  description = "Toggle Document Explorer",
-  run = function()
-    editor.invokeCommand("Navigate: Toggle Document Explorer")
-  end
+  description = "Open Space tree",
+  command = "Navigate: Tree",
+  priority = 6,
 }
 
 actionButton.define {
   icon = "search",
-  description = "Search",
-  priority = 998,
-  run = function()
-    editor.invokeCommand("Silversearch: Search")
-  end
+  description = "Search with Silversearch",
+  command = "Silversearch: Search",
+  priority = 5,
 }
 
--- Defines a new button that forces your UI into read-only mode
 actionButton.define {
-  icon = (editor.getUiOption("forcedROMode") and "edit") or "eye",
-  description = "Toggle Read-Only",
-  priority = 1000,
-  mobile = true,
-  run = function()
-    local mode = editor.getUiOption("forcedROMode")
-    editor.setUiOption("forcedROMode", not mode)
-    editor.rebuildEditorState()
-    editor.reloadConfigAndCommands()
-  end
+  icon = "list",
+  description = "Open table of contents",
+  command = "Navigate: Table of Contents",
+  priority = 4,
 }
 ```
 
-## Commands
+The [native keyboard bar](https://docs.silverbullet.md/API/keyboardBar) already provides context-aware list/task editing, links, attachments, formatting, undo/redo, and commands. Keep its defaults; **Editor: Toggle Keyboard Bar** remembers visibility per device. **Editor: Toggle Read Only Mode** and the built-in mobile lock button replace the custom read-only toggle.
+
+## Appearance
+
+The theme follows the system until you use **Editor: Toggle Dark Mode**. Use this command to return to the system theme; preferences are no longer cleared every time Space Lua reloads.
 
 ```space-lua
--- Sidebar Open Page Command
-
 command.define {
-  name = "Sidebar: Open Page",
-  key = "Ctrl-Alt-ArrowRight",
+  name = "Editor: Use System Theme",
   run = function()
-    local allPages = query[[
-      from index.tag "page"
-      order by _.lastModified desc
-    ]]
-    local page = editor.filterBox('➡️', allPages, "Select the page to open aside")
-    if page != nil then
-      editor.showPanel("rhs", 2, [[<iframe src = ]] .. page.name .. [[ style = "height: 98vh; width: 100%; border: 0;" />]])
-    end
-  end
+    -- Reset the dark mode toggle to follow the system theme
+    clientStore.delete("darkMode")
+    editor.reloadUI()
+  end,
 }
+```
 
-command.define {
-  name = "Sidebar: Close",
-  key = "Ctrl-Alt-ArrowLeft",
-  run = function()
-    editor.hidePanel("rhs")
-  end
-}
+## Libraries
+
+### Silversearch
+
+Preserve filename ranking, recent-note boosting, and developer-friendly tokenization. Library pages remain searchable but rank lower.
+
+```space-lua
+-- priority: 90
+-- Library configurations
+config.set("silversearch", {
+  -- Weighs specific fields more
+  weights = {
+    basename = 15,
+    -- Also available: tags, aliases, directory, displayName, content
+  },
+  -- Weighs pages with specific attributes set through frontmatter more if that attribute is included in the search
+  weightCustomProperties = {
+    books = 10,
+  },
+  -- Files that have been edited more recently than, will be weighed more. Options are "day", "week", "month" or "disabled"
+  recencyBoost = "week",
+  -- Rank specific folders down
+  downrankedFoldersFilters = {"Library/"},
+  -- Normalize diatrics in queries and search terms. Words like "brûlée" or "žluťoučký" will be indexed as "brulee" and "zlutoucky".
+  ignoreDiacritics = true,
+  -- Similar to `ignoreDiacritics` but for arabic diatritics
+  ignoreArabicDiacritics = false,
+  -- Breaks urls down into searchable words
+  tokenizeUrls = true,
+  -- Breaks words seperated with camel case into searchable words
+  splitCamelCase = true,
+  -- Increases the fuzziness of the full-text search, options are "0", "1", "2"
+  fuzziness = "1",
+  -- Puts newlines into the excerpts as opposed to rendering it as one continous string
+  renderLineReturnInExcerpts = true,
+})
+```
+
+### Mermaid
+
+[[Library/silverbullet-diagram/Mermaid]] renders both fenced diagrams and Lua-generated diagrams. These are the new library's supported settings; the old plug's `version`, `integrity`, and `icon_packs` options no longer apply.
+
+```space-lua
+-- priority: 90
+config.set("mermaid", {
+  -- ESM URL used when no local bundle is installed, and by the download command.
+  cdnUrl = "https://esm.sh/mermaid@11.4.0?bundle",
+  -- Space path used to save and load the optional local bundle.
+  bundlePath = "Library/silverbullet-diagram/mermaid.bundle.js",
+})
+```
+
+Run **Mermaid: Download bundle for offline use** to save a local renderer instead of loading it from the CDN. To make documents available offline on other devices too, enable `sync.documents` above.
+
+### AI gateway
+
+Keep the existing gateway preferences for use with an AI library; no AI library is currently installed in this space. Embedding indexing stays disabled.
+
+```space-lua
+-- priority: 90
+local aigateway_api_key = "DUMMY"
+
+-- NOTE: When `useProxy: false`, requests bypass SilverBullet's server proxy and go directly from the browser. Useful for local services like Ollama running on the same machine as the browser
+
+config.set("ai", {
+  providers = {
+    aigateway = {
+      provider = "openai",
+      apiKey = aigateway_api_key,
+      baseUrl = "https://aigateway.home.ilkerflix.com/v1",
+      preferredModels = {"openai/gpt-5.4-mini", "vllm/Qwen3.5-35B-A3B"},
+    },
+  },
+  -- Optional: auto-select a default model on startup
+  defaultTextModel = "aigateway:vllm-qwen/Qwen3.5-35B-A3B",
+  -- Optional: enable embeddings for semantic search
+  defaultEmbeddingModel = "aigateway:text-embedding-3-small",
+  indexEmbeddings = false,
+  -- Optional: configure DALL-E for image generation
+  defaultImageModel = "aigateway:dall-e-3",
+  -- Optional: customize chat behavior
+  chat = {
+    userInformation = "I'm a software developer who likes taking notes.",
+    userInstructions = "Please give short and concise responses.",
+  },
+})
 ```
