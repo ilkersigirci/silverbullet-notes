@@ -4,7 +4,7 @@ tags: meta/library
 files:
 - silversearch.plug.js
 share.uri: "ghr:MrMugame/silversearch/PLUG.md"
-share.hash: 70be48a7
+share.hash: 7d5dbbc1
 share.mode: pull
 ---
 # Silversearch
@@ -22,7 +22,7 @@ Indexing for documents isn't handled by Silversearch, but by other plugs or Spac
 
 - [Silverbullet PDF](https://github.com/MrMugame/silverbullet-pdf): Will index text content from PDFs using PDF.js
 
-If you are missing something and want to write your own indexer, you can look into the [API](#API) section.
+If you are missing something and want to write your own indexer, you can look into the API section.
 
 ## Keybinds
 - `Esc`: Closes Search Modal
@@ -79,7 +79,7 @@ config.set {
 ```
 
 ## Language support
-Silversearch makes an effort to support as many languages as possible, which isn't always possible. RTL languages for example aren't really supported by Silverbullet and thus it also doesn't make sense for Silversearch to support them. Most Latin languages work well out of the box, like English, German, French, etc. Other languages like Chinese don't work so well by default, because the tokenization (i.e. the breaking of text into smaller sections, which are later compared, generally "words") is way more complex than in English. This can be improved by installing a purpose build tokenizer. Available tokenizers are lisited below. If you are missing a tokenizer, you can implement your own, the description of the api can be found in the [API](#API) section.
+Silversearch makes an effort to support as many languages as possible, which isn't always possible. RTL languages for example aren't really supported by Silverbullet and thus it also doesn't make sense for Silversearch to support them. Most Latin languages work well out of the box, like English, German, French, etc. Other languages like Chinese don't work so well by default, because the tokenization (i.e. the breaking of text into smaller sections, which are later compared, generally "words") is way more complex than in English. This can be improved by installing a purpose build tokenizer. Available tokenizers are lisited below. If you are missing a tokenizer, you can implement your own, the description of the api can be found in the API section.
 
 - [Chinese (using `jieba-wasm`)](https://github.com/LelouchHe/silversearch-chinese-tokenizer)
 
@@ -130,4 +130,3 @@ export function tokenize(text: string): string[] {
 
 ## LICENSE
 Silversearch is licensed under [GPL-3](https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)).
-

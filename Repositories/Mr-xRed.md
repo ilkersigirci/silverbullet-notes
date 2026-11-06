@@ -3,7 +3,7 @@ name: "Repository/Mr-xRed Repo"
 tags: meta/repository
 pageDecoration.prefix: "📚 "
 share.uri: "https://github.com/Mr-xRed/silverbullet-libraries/blob/main/Repository/Mr-xRed.md"
-share.hash: 13c8a6b2
+share.hash: b9cae10a
 share.mode: pull
 ---
 ## Tools
@@ -42,6 +42,11 @@ name: "🛠️ MathInTables"
 uri: github:Mr-xRed/silverbullet-libraries/MathInTables.md
 website: https://github.com/Mr-xRed/silverbullet-libraries/blob/main/MathInTables.md
 description: "Workaround for Katex rendering in Tables"
+---
+name: "🛠️ LineNumbering"
+uri: github:Mr-xRed/silverbullet-libraries/LineNumbering.md
+website: https://github.com/Mr-xRed/silverbullet-libraries/blob/main/LineNumbering.md
+description: "Adds a clean, theme-aware, clickable line number gutter to the editor on every page."
 ---
 name: "🛠️ Advanced Panel Control and Window Management"
 uri: github:Mr-xRed/silverbullet-libraries/AdvancedPanelControl.md

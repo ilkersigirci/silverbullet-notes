@@ -1,7 +1,7 @@
 ---
 tags: meta/repository
 share.uri: "github:ilkersigirci/silverbullet-libraries/REPO.md"
-share.hash: d9d7a7f2
+share.hash: 79f6b660
 share.mode: pull
 ---
 
@@ -47,4 +47,10 @@ author: Ilker SIGIRCI
 description: Mobile Toolbar
 website: https://github.com/ilkersigirci/silverbullet-libraries
 uri: https://github.com/ilkersigirci/silverbullet-libraries/blob/main/styles/mobile-toolbar.md
+---
+name: Baseline
+author: Ilker SIGIRCI
+description: A port of the Obsidian Baseline theme with a neutral greyscale palette, a floating page card, Inter and Obsidian-style callouts
+website: https://github.com/svnaxis/obsidian-baseline
+uri: https://github.com/ilkersigirci/silverbullet-libraries/blob/main/styles/baseline.md
 ```
