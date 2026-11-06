@@ -80,6 +80,17 @@ command.define {
 }
 ```
 
+### Page width
+
+Wider pages than the [[Library/ilkersigirci/styles/baseline|Baseline]] theme's 740px default. The theme loads at `priority: -10`, so this block uses `-20` to load after it.
+
+```space-style
+/* priority: -20 */
+html[data-theme]:root {
+  --bl-line-width: 880px;
+}
+```
+
 ## Libraries
 
 ### Silversearch
