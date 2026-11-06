@@ -8,10 +8,30 @@ This is where you configure SilverBullet to your liking. See [[^Library/Std/Conf
 -- priority: 90
 -- Apply preferences after the built-in defaults (priority 99), before libraries.
 -- Core configuration settings
+
+-- Heavy media stays on demand: fetched from the server when opened, never synced.
+local heavyMedia = {
+  "pdf",
+  "png", "jpg", "jpeg", "gif", "webp", "avif", "heic",
+  "mp3", "m4a", "wav", "ogg", "flac",
+  "mp4", "mov", "webm", "mkv",
+}
+-- sync.ignore uses a simple gitignore matcher: case-sensitive and matched from the
+-- start of the path, so each extension needs a root ("*.pdf") and a folder
+-- ("**/*.pdf") pattern, in lower and upper case.
+local syncIgnore = { "!*.md", "!**/*.md" } -- never skip pages, whatever their names contain
+for _, ext in ipairs(heavyMedia) do
+  for _, e in ipairs({ ext, string.upper(ext) }) do
+    table.insert(syncIgnore, "*." .. e)
+    table.insert(syncIgnore, "**/*." .. e)
+  end
+end
+
 config.set {
-  -- Keep attachments on demand to reduce local storage and background sync.
-  -- Set to true if you need documents available offline.
-  ["sync.documents"] = false,
+  -- Sync documents (non-markdown files) so library assets work offline:
+  -- Mermaid's local bundle, KaTeX and the theme's fonts.
+  ["sync.documents"] = true,
+  ["sync.ignore"] = syncIgnore,
 }
 ```
 
@@ -143,7 +163,7 @@ config.set("mermaid", {
 })
 ```
 
-Run **Mermaid: Download bundle for offline use** to save a local renderer instead of loading it from the CDN. To make documents available offline on other devices too, enable `sync.documents` above.
+The local renderer (`mermaid.bundle.js` and `process.js`, saved by **Mermaid: Download bundle for offline use**) is installed, so diagrams don't load from the CDN. With `sync.documents` on (see General), it's available offline on every device. After changing `cdnUrl` to a newer Mermaid version, run that command again.
 
 ### AI gateway
 
