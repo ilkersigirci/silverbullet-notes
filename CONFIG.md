@@ -56,31 +56,56 @@ Saved choices on each device override these defaults. To apply this layout on a 
 
 ## Action buttons and mobile editing
 
-Keep the built-in Home, Page Picker, Command Palette, account menu, PWA history controls, and mobile read-only button. Add shortcuts for the native views and Silversearch; on phones these extra shortcuts live in the menu to leave room for the page title and drawer buttons.
+Home, Silversearch and the command palette are in the top bar on every device. On phones the read-only lock sits next to them, and the buttons at the left and right edges of the bar open the Space tree and Table of Contents drawers. On desktop the Table of Contents has a button too; the Space tree doesn't: use `Ctrl-o`. There is no page picker button: the Space tree's **Open** field finds, opens and creates pages the same way, and `Ctrl-k` still opens the picker. Back and forward buttons appear only in the desktop PWA, which has no browser toolbar; on phones, use the system back gesture.
+
+Closing a drawer with its own ✕ removes its edge button on that device; closing it with the edge button keeps it. To bring a removed one back, run **Navigate: Tree** or **Navigate: Table of Contents** from the command palette.
 
 ```space-lua
--- Action buttons configuration
--- Additional action buttons defined separately
-actionButton.define {
-  icon = "sidebar",
-  description = "Open Space tree",
-  command = "Navigate: Tree",
-  priority = 6,
-}
-
+-- Action buttons. Priority sets the order, highest first: the built-in Home is 3
+-- and the command palette 1.
+-- dropdown = false keeps a button in the bar on phones; others go in the menu.
+-- mobile = true shows a button on phones (and tablets) only, false on desktop only.
 actionButton.define {
   icon = "search",
   description = "Search with Silversearch",
   command = "Silversearch: Search",
-  priority = 5,
+  priority = 2.8,
+  dropdown = false,
 }
 
+-- Desktop only: phones have the Table of Contents drawer's edge button.
 actionButton.define {
   icon = "list",
   description = "Open table of contents",
   command = "Navigate: Table of Contents",
-  priority = 4,
+  priority = 1.8,
+  mobile = false,
 }
+
+-- Rearrange the built-in buttons, which the standard library defines before this
+-- block runs. There is no actionButton.update, so this merges the changes into each
+-- definition the way command.update does for commands; false removes a button.
+-- Each is found by its command; the read-only lock and PWA back/forward have none,
+-- so by icon.
+local builtInButtons = {
+  ["Navigate: Page Picker"] = false,
+  ["Open Command Palette"] = { dropdown = false },
+  lock = { priority = 2.6, dropdown = false },
+  -- Desktop PWA only: phones go back with the system back gesture.
+  ["chevron-left"] = { mobile = false },
+  ["chevron-right"] = { mobile = false },
+}
+local buttons = config.get("actionButtons", {})
+for i = #buttons, 1, -1 do -- backwards, so removing a button doesn't skip the next
+  local changes = builtInButtons[buttons[i].command or buttons[i].icon]
+  if changes == false then
+    table.remove(buttons, i)
+  else
+    for key, value in pairs(changes or {}) do
+      buttons[i][key] = value
+    end
+  end
+end
 ```
 
 The [native keyboard bar](https://docs.silverbullet.md/API/keyboardBar) already provides context-aware list/task editing, links, attachments, formatting, undo/redo, and commands. Keep its defaults; **Editor: Toggle Keyboard Bar** remembers visibility per device. **Editor: Toggle Read Only Mode** and the built-in mobile lock button replace the custom read-only toggle.
