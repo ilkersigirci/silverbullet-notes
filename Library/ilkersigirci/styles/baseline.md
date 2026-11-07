@@ -6,7 +6,7 @@ files:
   - baseline/InterVariable-Italic.woff2
   - baseline/LICENSE-Inter.txt
 share.uri: "https://github.com/ilkersigirci/silverbullet-libraries/blob/main/styles/baseline.md"
-share.hash: dc75a144
+share.hash: 9b7766fc
 share.mode: pull
 ---
 
@@ -434,6 +434,16 @@ html #sb-root {
 #sb-root #sb-top .sb-actions button svg {
   width: 18px;
   height: 18px;
+}
+/* The account button (accounts servers) holds a 26px avatar, not an 18px icon. Keep
+   core's 2px padding and flex centring for it over the 7px above: in the phone menu,
+   where core lays buttons out as blocks, the avatar otherwise sits off-centre and
+   the menu clips its bottom. */
+#sb-root #sb-top .sb-actions button:has(.sb-profile-avatar) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
 }
 #sb-root #sb-top .progress-wrapper,
 #sb-root #sb-top .progress-hole {
