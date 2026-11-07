@@ -6,7 +6,7 @@ files:
   - baseline/InterVariable-Italic.woff2
   - baseline/LICENSE-Inter.txt
 share.uri: "https://github.com/ilkersigirci/silverbullet-libraries/blob/main/styles/baseline.md"
-share.hash: 475476d9
+share.hash: dc75a144
 share.mode: pull
 ---
 
@@ -1134,6 +1134,11 @@ Markdown tables, query results and Lua widget tables share Baseline's look: plai
 #sb-root #sb-main .cm-editor .sb-lua-directive-block:not(.sb-lua-view, .sb-frontmatter-preview *) > div > .button-bar button svg {
   width: 15px;
   height: 15px;
+}
+/* A fenced block rendered as a widget (```mermaid) keeps core's code-copy button on its line,
+   where it lands on the widget's bar. The bar has its own Copy, so hide the duplicate. */
+#sb-root #sb-main .cm-editor .cm-line.sb-fenced-code-iframe:has(.button-bar > [data-button="copy"]) > .sb-actions {
+  display: none;
 }
 
 /* Command buttons rendered in pages, e.g. widgets.commandButton */
