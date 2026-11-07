@@ -58,8 +58,6 @@ Saved choices on each device override these defaults. To apply this layout on a 
 
 Home, Silversearch and the command palette are in the top bar on every device. On phones the read-only lock sits next to them, and the buttons at the left and right edges of the bar open the Space tree and Table of Contents drawers. On desktop the Table of Contents has a button too; the Space tree doesn't: use `Ctrl-o`. There is no page picker button: the Space tree's **Open** field finds, opens and creates pages the same way, and `Ctrl-k` still opens the picker. Back and forward buttons appear only in the desktop PWA, which has no browser toolbar; on phones, use the system back gesture.
 
-Closing a drawer with its own ✕ removes its edge button on that device; closing it with the edge button keeps it. To bring a removed one back, run **Navigate: Tree** or **Navigate: Table of Contents** from the command palette.
-
 ```space-lua
 -- Action buttons. Priority sets the order, highest first: the built-in Home is 3
 -- and the command palette 1.
@@ -106,6 +104,19 @@ for i = #buttons, 1, -1 do -- backwards, so removing a button doesn't skip the n
     end
   end
 end
+```
+
+On phones, the edge buttons open and close the drawers, and picking a page in a drawer closes it too. The drawers' own ✕ is hidden there, because in SilverBullet it also removes the drawer's edge button on that device. If an edge button goes missing, run **Navigate: Tree** or **Navigate: Table of Contents** from the command palette to bring it back.
+
+```space-style
+/* 600px is SilverBullet's narrow-screen breakpoint, where sidebars become drawers
+   with edge buttons in the top bar. */
+@media (max-width: 600px) {
+  #sb-root .sb-nav-root-lhs .sb-nav-close,
+  #sb-root .sb-nav-root-rhs .sb-nav-close {
+    display: none;
+  }
+}
 ```
 
 The [native keyboard bar](https://docs.silverbullet.md/API/keyboardBar) already provides context-aware list/task editing, links, attachments, formatting, undo/redo, and commands. Keep its defaults; **Editor: Toggle Keyboard Bar** remembers visibility per device. **Editor: Toggle Read Only Mode** and the built-in mobile lock button replace the custom read-only toggle.
